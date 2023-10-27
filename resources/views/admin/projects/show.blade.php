@@ -10,7 +10,7 @@
 
         <h1>{{ $project->name }}</h1>
         <div class="row g-3 mt-3">
-            <div class="col-2">
+            <div class="col-4">
                 <strong>Slug</strong>
                 <p>{{ $project->slug }}</p>
             </div>
@@ -22,15 +22,27 @@
                 </p>
             </div>
 
+            
+            <div class="col-2">
+                <strong>Tecnologie</strong>
+                <p>
+                    @foreach($project->tecnologies as $tecnology)
+                        <span class="badge rounded-pill text-bg-success">{{ $tecnology->name }}</span>
+                    @endforeach
+                </p>
+            </div>
+
             <div class="col-4">
                 <strong>Link</strong>
                 <p>{{ $project->link }}</p>
             </div>
-            <div class="col-2">
+
+
+            <div class="col-6">
                 <strong>Created at</strong>
                 <p>{{ $project->created_at }}</p>
             </div>
-            <div class="col-2">
+            <div class="col-6">
                 <strong>Updated at</strong>
                 <p>{{ $project->updated_at }}</p>
             </div>

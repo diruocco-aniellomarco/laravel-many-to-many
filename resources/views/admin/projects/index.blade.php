@@ -16,6 +16,8 @@
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Tecnologia</th>
                 <th scope="col">Description</th>
                 <th scope="col">Link</th>
                 <th scope="col">Slug</th>
@@ -31,6 +33,11 @@
                     <td>{{$project->name}}</td>
                     <td>
                         <span class="badge rounded-pill text-bg-primary">{{$project->type?->label}}</span>
+                    </td>
+                    <td> 
+                        @foreach($project->tecnologies as $tecnology)
+                        <span class="badge rounded-pill text-bg-success">{{ $tecnology->name }}</span>
+                        @endforeach
                     </td>
                     <td>{{$project->description}}</td>
                     <td>{{$project->link}}</td>

@@ -58,6 +58,7 @@ class ProjectController extends Controller
         $project = new Project();
         $project->fill($data);
         $project->save();
+        
         return redirect()->route('admin.projects.show', $project);
         // aggiungi sul model comic protected $fillable = [array di dati da riempire]
     }
