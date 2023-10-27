@@ -9,6 +9,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Type;
 use App\Models\Tecnology;
+use Illuminate\Support\Arr;
 
 //attivare se crei una validazione function 
 // use Illuminate\Support\Facades\Validator;
@@ -88,7 +89,12 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project','types'));
+        $tecnologies = Tecnology::all();
+        
+        //gli passo un arrray che contienti tutte le tecnologie contenute in un progetto (per farlo comparire "checked" quando lo vado a modificare )
+        $teconology_ids = $project->tecnologies->pluck('id')->toArray();
+
+        return view('admin.projects.edit', compact('project','types','tecnologies','teconology_ids'));
     }
 
     /**
@@ -107,6 +113,11 @@ class ProjectController extends Controller
         $data = $request->validated();
         
         $project->update($data);
+
+        if(Arr::exists($data, "tecnologies"))
+        $project->tecnologies()->sync($data["tecnologies"]);
+        else
+        $project->tecnologies()->detach();
         return redirect()->route('admin.projects.show', $project);
     }
 
