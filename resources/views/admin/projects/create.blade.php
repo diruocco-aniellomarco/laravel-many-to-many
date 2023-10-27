@@ -47,7 +47,32 @@
                 <label class="d-block" for="slug">Slug</label>
                 <input type="text" id="slug" name="slug" class="form-control">
             </div>
-    
+
+            <div class="col-12">
+
+                <label class="form-label">Tecnologia:</label>
+
+                <div class="form-check @error('tecnologies') is-invalid @enderror p-0">
+                    @foreach ($tecnologies as $tecnology)
+
+                        <span class="me-3">
+                            <input
+                            type="checkbox"
+                            id="tecnology-{{ $tecnology->id }}"
+                            value="{{ $tecnology->id }}"
+                            name="tecnologies[]"
+                            class="form-check-control"
+                            {{-- @if (in_array($tecnology->id, old('tecnologies', $project_tecnology ?? []))) checked @endif --}}
+                            >
+                            <label for="tecnology-{{ $tecnology->id }}">
+                            {{ $tecnology->name }}
+                            </label>
+                        </span>
+                        
+                    @endforeach
+                </div>
+
+            </div>
             <div class="col-12">
                 <label class="d-block" for="description">Descrizione</label>
                 <input type="text" id="description" name="description" class="form-control">

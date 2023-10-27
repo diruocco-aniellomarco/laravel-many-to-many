@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Type;
+use App\Models\Tecnology;
 
 //attivare se crei una validazione function 
 // use Illuminate\Support\Facades\Validator;
@@ -35,7 +36,10 @@ class ProjectController extends Controller
     public function create()
     {   
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        // $project = new Project;
+        // $tecnologies = Tecnology::get();
+        $tecnologies = Tecnology::all();
+        return view('admin.projects.create', compact('types','tecnologies'));
     }
 
     /**
@@ -49,16 +53,17 @@ class ProjectController extends Controller
         //validazione con funzione
         // $data = $this->validation($request->all());
         // $this->validation($data);
-
+        
         // senza la validazione
         // $data = $request->all(); 
+        // dd($request->all());
 
         $data = $request->validated();
         
         $project = new Project();
         $project->fill($data);
         $project->save();
-        
+        $project->tecnologies()->attach($data['tecnologies']);
         return redirect()->route('admin.projects.show', $project);
         // aggiungi sul model comic protected $fillable = [array di dati da riempire]
     }
