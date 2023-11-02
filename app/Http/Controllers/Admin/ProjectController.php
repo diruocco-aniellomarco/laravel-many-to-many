@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Type;
 use App\Models\Tecnology;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 //attivare se crei una validazione function 
 // use Illuminate\Support\Facades\Validator;
@@ -50,6 +51,7 @@ class ProjectController extends Controller
      * *@return \Illuminate\Http\Response
      */
     public function store(StoreProjectRequest $request)
+    
     {
         //validazione con funzione
         // $data = $this->validation($request->all());
@@ -64,6 +66,12 @@ class ProjectController extends Controller
         $project = new Project();
         $project->fill($data);
         $project->save();
+
+        // Storage::put('cartella_in_cui_caricare', $data['immagine_da_caricare']);
+        $cover_image_path = Storage::put("uploads/projects/{$project->id}/cover_image", $data['cover_image']);
+        $project->cover_image = $cover_image_path;
+        $project->save();
+
         $project->tecnologies()->attach($data['tecnologies']);
         return redirect()->route('admin.projects.show', $project);
         // aggiungi sul model comic protected $fillable = [array di dati da riempire]
@@ -130,6 +138,9 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {   
         $project->tecnologies()->detach();
+        if($project->cover_image){
+            Storage::delete($project->cover_image);
+        }
         $project->delete();
         return redirect()->route('admin.projects.index');
     }

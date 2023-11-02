@@ -29,7 +29,8 @@ class StoreProjectRequest extends FormRequest
             'link'=> ['required', 'string'],
             'slug'=> ['required', 'string'],
             'type_id'=> ['nullable', 'integer','exists:types,id'],
-            'tecnologies'=> ['nullable', 'exists:tecnologies,id']
+            'tecnologies'=> ['nullable', 'exists:tecnologies,id'],
+            'cover_image' =>['nullable', 'image']
             // exists:types,id = se esiste nella tabella types, un campo id corrispondente
         ];
     }
@@ -52,7 +53,9 @@ class StoreProjectRequest extends FormRequest
             'type_id.integer'=> 'il tipo non è corretto',
             'type_id.exists:types,id'=> 'il tipo non è corretto',
 
-            'tecnologies.exists'=>'la tecnologia inserita non è valida'
+            'tecnologies.exists'=>'la tecnologia inserita non è valida',
+
+            'cover_image.image'=>'inserire un file immagine'
             
         ];
     }
