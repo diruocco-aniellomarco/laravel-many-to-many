@@ -157,6 +157,17 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index');
     }
 
+
+    public function deleteImage(Project $project)
+    {   
+        if($project->cover_image) 
+        {
+        Storage::delete($project->cover_image);
+        $project->cover_image = null;
+        $project->save();
+        }
+        return redirect()->back();
+    }
     // private function validation($data, $id = null){
 
     //     $validator = Validator::make(

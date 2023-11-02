@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
-
+@section('css')
+    {{-- FontAwesome --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+@endsection
 
 @section('content')
 
@@ -90,8 +93,24 @@
                 </form>
             </div>
 
-            <div class="col-4">
-                <img src="{{asset('/storage/'. $project->cover_image)}}" alt="" class="image-fluid" id="cover_image_preview">
+            <div class="col-4 ">
+                @if ($project->cover_image)
+                    <div class="position-relative">
+                        <img src="{{asset('/storage/'. $project->cover_image)}}" alt="" class="image-fluid " id="cover_image_preview">
+                    
+                        {{--  --}}
+                        <form action="{{route('admin.projects.delete-image', $project)}}" method="POST" class="position-absolute top-0 ">
+                            @csrf
+                            @method('DELETE')
+                            <button id="button-delete-edit" class="bg-danger text-light badge rounded-pill translate-middle bg-danger">
+                                <i class="fa-solid fa-trash "></i>
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <img src="https://placehold.co/400" alt="" class="image-fluid " id="cover_image_preview">
+                @endif
+                
             </div>
         </div>
         
