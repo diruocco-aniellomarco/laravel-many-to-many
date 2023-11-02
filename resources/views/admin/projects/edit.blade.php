@@ -91,10 +91,29 @@
             </div>
 
             <div class="col-4">
-                <img src="{{asset('/storage/'. $project->cover_image)}}" alt="" class="image-fluid">
+                <img src="{{asset('/storage/'. $project->cover_image)}}" alt="" class="image-fluid" id="cover_image_preview">
             </div>
         </div>
         
     </div>
     
+@endsection
+
+@section('scripts')
+<script type="text/javascript"> 
+    // mi aggancio alla input della sezione "Cover"
+    const inputFileElement = document.getElementById('cover_image');
+    // mi aggancio alla img dove si trova l'immagine caricata/da caricare
+    const coverImagePreview = document.getElementById('cover_image_preview');
+
+    // quando l'input della sezione Cover, cambia allora...
+    inputFileElement.addEventListener('change', function(){
+        //prendi la sezione files di questo progetto
+        const [file] = this.files;
+        
+        //tramite l'ibreria "URL.createObjectURL( )" crea un url temporaneo dell'immagine che si trova in "files"
+        coverImagePreview.src = URL.createObjectURL(file);
+    })
+</script>
+
 @endsection
