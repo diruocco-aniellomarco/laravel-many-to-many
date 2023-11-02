@@ -20,6 +20,7 @@
                 <th scope="col">Tecnologia</th>
                 <th scope="col">Description</th>
                 <th scope="col">Link</th>
+                <th scope="col">Cover</th>
                 <th scope="col">Slug</th>
                 <th scope="col">Created up</th>
                 <th scope="col">Updated up</th>
@@ -39,8 +40,17 @@
                         <span class="badge rounded-pill text-bg-success">{{ $tecnology->name }}</span>
                         @endforeach
                     </td>
-                    <td>{{$project->description}}</td>
-                    <td>{{$project->link}}</td>
+                    <td class="text-truncate" style="max-width: 250px">{{$project->description}}</td>
+                    <td class="text-truncate" style="max-width: 200px">
+                        <a href="{{$project->link}}">{{$project->link}}</a>
+                    </td>
+                    <td>
+                        @if ($project->cover_image)
+                            <i class="fa-solid fa-check fa-lg text-success"></i>
+                        @else
+                            <i class="fa-solid fa-xmark fa-lg text-danger"></i>
+                        @endif
+                    </td>
                     <td>{{$project->slug}}</td>
                     <td>{{$project->created_at}}</td>
                     <td>{{$project->updated_at}}</td>
